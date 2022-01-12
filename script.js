@@ -1,4 +1,3 @@
-
 /**
  * Awful puns Write your destiny. Will you cut the competition down?! don't get crushed.
  * 
@@ -7,133 +6,208 @@
  * SET CSS DOM manipulation
  * Remove Console Log Functionality -> Switch to DOM
  * Clean up code
- * 
-
-Logic: 
-1: On 'Start click' -> Assign Random choice to the computer
-2: Click on one of the choices to pick weapon
-3: Return result
-4: Display  result on page
-
  
- 
-//Computers choice. Assign random number:
-/** 
-let computerSelection = '';
-let = '';
-let winCount = 0;
-let loseCount = 0;
-let total = 0;
+*/
+const grumpyRock = "rps-images/angryRock-hover-png.png";
+const angryLetter = "rps-images/paper-hover.png";
+const sharpScissors = "rps-images/scissors-hover.png";
 
+const pun = document.querySelector('.pun');
+const playGame = document.querySelector('.playGame');
+const startButton = document.querySelector('.startButton');
+const choices = document.querySelectorAll('div.choice');
+const result = document.querySelector('.result');
+const battleBox = document.querySelector('.battleBox');
+const replay = document.querySelector('.replayButton');
+const playerBox = document.querySelector('.player')
+const computerBox = document.querySelector('.computer')
+let playersImageAssignment;
+let computersImageAssignment;
 
-play();
-
-function play() {
-
-    for (let i = 0; i < 5; i++) {
-        if (winCount === 999) {
-            break;
-        } else {
-            total = i + 1;
-        }
-        computerPlay();
-        playerPlay();
-        rockPaperScissors();
-    }
-    console.log("Wins: " + winCount);
-    console.log("Losses: " + loseCount);
-    console.log("Total: " + total);
-
-
-    if (winCount > 2) {
-        alert("Nice job. You won. really. Amazing.")
-    }
-    else if (winCount == loseCount) {
-        alert("Hmm.. draw");
-    } else {
-        alert("Loser! Loooossseeer! Y o U l O s E. double loser.");
-    }
+//Clicking the start button begins game
+startButton.addEventListener('click', (e) => {
+    let name = startButton;
+    toggleHidden(name);
+    chooseYourWeapon();
+    toggleWeapons();
+}, {
+    once: true //Fix to prevent multiple 'choose your weapons' text popping up
 }
+);
+//Play another game
+function playAgain() {
+    const replayButton = document.createElement('button');
+    replayButton.classList.add('replayButton');
+    replayButton.textContent = "Play again?";
+    playGame.appendChild(replayButton);
+    replayButton.addEventListener('click', function() {
+        clearSlate(playerBox);
+        clearSlate(computerBox);
+        clearSlate(playGame);
+        chooseYourWeapon();
+        toggleWeapons();
 
+
+    })
+}
+//Removes generated childNodes
+function clearSlate(parent) {
+    while (parent.firstChild) {
+        parent.removeChild(parent.firstChild);
+    }
+
+};
+//Computers choice of weapon, as well as their battle card
 function computerPlay() {
-    computerSelection = Number(Math.floor(Math.random() * 3) + 1);
+    computersChoice = Number(Math.floor(Math.random() * 3) + 1);
+    console.log(`Computer choice ${computersChoice}`);
+    if (computersChoice ===1) {
+        computersImageAssignment = grumpyRock;
+    } else if (computersChoice ===2) {
+        computersImageAssignment = angryLetter;
+    } else {
+        computersImageAssignment = sharpScissors;
+    }
+    
 };
 
-//Ask user for their choice, make case insenstive, assign scoring
-function playerPlay() {
-    let validInput = 0;
-    while (validInput != 1) {
-        let answer = window.prompt("Rock paper scissors! Choose your weapon?");
-        answer = answer.toLowerCase();
+//Player selects Rock = 1, Paper = 2 Scissors =3, assigns battle card to  player
 
-        if (answer === "rock") {
-            return playerSelection = 1;
+for (let i = 0; i<choices.length;i++) {
+    choices[i].index = i;
+    choices[i].addEventListener('click', function () {
+        playersChoice = this.index+1;
+        if (playersChoice ===1) {
+            playersImageAssignment = grumpyRock;
+        } else if (playersChoice ===2) {
+            playersImageAssignment = angryLetter;
+        } else {
+            playersImageAssignment = sharpScissors;
         }
-        if (answer === "paper") {
-            return playerSelection = 2;
+    
+       displayChoice(playersChoice);
+       computerPlay();
+       rockPaperScissors(); 
+       toggleWeapons();
+       battleWeaponImages();
+       
+    })};
+
+    displayChoice = (choice) => {
+        if (choice ===1) {
+            choice = "Grumpy Rock";
+        } else if (choice ===2) {
+            choice ="Angry Letter"
+        } else {
+            choice = "Sharp scissors"
         }
-        if (answer === "scissors") {
-            return playerSelection = 3;
-        }
-        if (answer === "nuclear bomb") {
-            alert("Cheat code")
-            return playerSelection = 4;
-        }
-        else {
-            alert("Looks like you didn't pick any of the right options, try again.");
-        }
+        document.querySelector('.gameText').innerHTML = `You chose... ${choice}!`
+    };
+
+
+  
+
+
+function transformText(name) {
+    if (!name.classList.contains("transformText")) {
+        name.classList.add('transformText');
+    } else {
+        name.classList.remove('transformText');
+    }
+};
+function toggleHidden(name) {
+    if (!name.classList.contains('hidden')) {
+        name.classList.add('hidden');
+    } else{
+        name.classList.remove('hidden');
+
+    }
+};
+
+
+function toggleWeapons() {
+    let weaponContainer = document.querySelector("div.container");
+    displayValue="";
+    if (weaponContainer.style.display=="")
+    displayValue = "none";
+    weaponContainer.style.display = displayValue;
+}
+ 
+    function transform(name) {
+    if (!name.classList.contains("transform")) {
+        name.classList.add('transform');
+    } else {
+        name.classList.remove('transform');
+    }
+};
+
+function chooseYourWeapon() {
+    const content = document.createElement('h2');
+    content.textContent = "Choose your weapon...".toUpperCase();
+    content.classList.add('gameText');
+    playGame.appendChild(content);
+    content.classList.add('visible');
+};
+    
+function gameResult(resultMessage) {
+    document.querySelector('.gameText').innerHTML = resultMessage;
+}
+
+function battleWeaponImages() {
+    
+    const playerImage = document.createElement('img');
+    const computerImage = document.createElement('img');
+    playerImage.src = playersImageAssignment;
+    computerImage.src= computersImageAssignment;
+   playerBox.appendChild(playerImage);
+    computerBox.appendChild(computerImage)
+    
+}
+
+const rpsObject = {
+    1: {
+        1: 'draw',
+        2: 'lose',
+        3: 'win'
+    },
+    2: {
+        1: 'win',
+        2: 'draw',
+        3: 'lose'
+    },
+    3: {
+        1: 'lose',
+        2: 'win',
+        3: 'draw'
     }
 }
+
+
+
+win = () => gameResult(winMessage);
+draw = () => gameResult(drawMessage);
+lose = () => gameResult(loseMessage);
+
+const winMessage ="You Win!";
+const loseMessage ="You lose!";
+const drawMessage ="Draw!";
+
 function rockPaperScissors() {
-    //cheat code: win
-    if (playerSelection === 4) {
-        alert("Cheat code activated: Nuclear Bomb detonating in 5..4..3..2..1...You win, obviously.. *sigh*");
-        winCount = 999;
-        loseCount = -999;
-        total = 3.14;
+    switch(rpsObject[playersChoice][computersChoice]) {
+        case 'win':
+            console.log("Win");
+            win();
+            break;
+        case 'lose':
+            lose();
+            console.log("Lose");
+            break;
+        case 'draw':
+            draw();
+            console.log("draw");
+            break;
     }
-    //draw
-    if (playerSelection === computerSelection) {
-        alert("Draw!");
+    playAgain();
     }
-    //rock
-    else if (playerSelection === 1) {
-        if (computerSelection === 2) {
-            winnerMessage();
-            winCount++;
 
-        } else {
-            loserMessage();
-            loseCount++;
-        }
-    }
-    //paper
-    else if (playerSelection === 2) {
-        if (computerSelection === 1) {
-            winnerMessage();
-            winCount++;
-        } else {
-            loserMessage();
-            loseCount++;
-        }
-    }
-    //scissors
-    else if (playerSelection === 3) {
-        if (computerSelection === 2) {
-            winnerMessage();
-            winCount++;
-        } else {
-            loserMessage();
-            loseCount++;
-        }
-    }
-}
 
-function winnerMessage() {
-    alert("Congratulations, you win this round.");
-}
-function loserMessage() {
-    alert("You lost this round! Better luck next time.");
-}
-
-*/

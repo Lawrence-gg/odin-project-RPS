@@ -4,27 +4,50 @@
 <head>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Rock+3D&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rock+3D&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <script src="script.js" defer></script>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Rock Paper Scissors - Will you cut the competition down? or get crushed</title>
+    <title>Rock Paper Scissors - Will you cut the competition down? or get </title>
 </head>
 
 
 <body>
-    <h1 class ="title">Rock Paper Scissors</h1>
-    <h2 class="pun">Write your destiny. Will you cut the competition down? or get crushed.</h2>
-    <div class="playGame">
-        <button class="startButton">Start</button>
+    <div class="navbar"></div>
+    <div class="main-content">
+        <h1 class="title" onmouseover="transformText(this)" onmouseout="transformText(this)">Rock Paper Scissors</h1>
+        <h2 class="pun" onmouseover="transformText(this)" onmouseout="transformText(this)">Write your destiny. Will you
+            cut
+            the competition down? or get
+            CRUSHED.</h2>
 
+        <div class="playGame">
+            <button class="startButton" onmouseover="transform(this)" onmouseout="transform(this)">Start</button>
+
+        </div>
+        <div class="container" style="display:none">
+            <div class="choice" onmouseover="transform(this)" onmouseout="transform(this)">
+                <img src="rps-images/angryRock-png.png" alt="Angry rock">
+            </div>
+            <div class="choice" onmouseover="transform(this)" onmouseout="transform(this)">
+                <img src="rps-images/Paper-png.png" alt="Papier">
+            </div>
+            <div class="choice" onmouseover="transform(this)" onmouseout="transform(this)">
+                <img src="rps-images/scissors-png.png" alt="scissors">
+            </div>
+        </div>
+        <div class="battleBox">
+            <div class="player"></div>
+            <div class="computer"></div>
+        </div>
     </div>
-    
 
 
 </body>
+
 
 </html>
